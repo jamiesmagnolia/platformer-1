@@ -24,6 +24,8 @@ class Player {
 
     update() {
         this.draw()
+
+        this.position.x += this.velocity.x
         this.position.y += this.velocity.y
 
         if (this.position.y + this.height + this.velocity.y < canvas.height) { // fall keeps accelerating
@@ -35,10 +37,20 @@ class Player {
     }
 }
 
+// player object
 const player = new Player({x:0, y:0})
 
-let y = 100
+// keys
+const keys = {
+    d: {
+        pressed: false
+    },
+    a: {
+        pressed: false
+    }
+}
 
+// functions
 function animate() { // animation loop
     window.requestAnimationFrame(animate)
 
@@ -48,6 +60,42 @@ function animate() { // animation loop
 
     // player
     player.update()
+
+    player.velocity.x = 0
+    if (keys.d.pressed) {
+        player.velocity.x = 1
+    }
+    else if (keys.a.pressed) {
+        player.velocity.x = -1
+    }
 }
 
 animate() // calls loop
+
+// event listeners
+
+window.addEventListener('keydown', (event)=> {
+    switch(event.key) {
+        // WASD
+        case 'd':
+            keys.d.pressed = true // keys pressed == keydown
+            break
+        case 'a':
+            keys.a.pressed = true // keys pressed == keydown
+            break
+        case 'w':
+            player.velocity.y = -15
+            break
+    }
+})
+
+window.addEventListener('keyup', (event)=> {
+    switch(event.key) {
+        case 'd':
+            keys.d.pressed = false
+            break
+        case 'a':
+            keys.a.pressed = false
+            break
+    }
+})

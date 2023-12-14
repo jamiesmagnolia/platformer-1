@@ -19,6 +19,7 @@ class Player {
     }
 
     update() {
+        this.draw()
         this.position.y++
     }
 }
@@ -35,7 +36,6 @@ function animate() { // animation loop
     context.fillRect(0, 0, canvas.width, canvas.height)
 
     // player
-    player.draw()
     player.update()
 
 }

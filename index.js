@@ -5,5 +5,39 @@ const context = canvas.getContext("2d") // what API you want
 canvas.width = 1024
 canvas.height = 576
 
-context.fillStyle = "red"
-context.fillRect(0, 0, canvas.width, canvas.height)
+class Player {
+    constructor() {
+        this.position = {
+            x: 0,
+            y: 0
+        }
+    }
+
+    draw() {
+        context.fillStyle = "red"
+        context.fillRect(this.position.x, this.position.y, 100, 100)
+    }
+
+    update() {
+        this.position.y++
+    }
+}
+
+const player = new Player()
+
+let y = 100
+
+function animate() { // animation loop
+    window.requestAnimationFrame(animate)
+
+    // bg
+    context.fillStyle = "white"
+    context.fillRect(0, 0, canvas.width, canvas.height)
+
+    // player
+    player.draw()
+    player.update()
+
+}
+
+animate() // calls loop

@@ -5,5 +5,5 @@ const context = canvas.getContext("2d") // what API you want
 canvas.width = 1024
 canvas.height = 576
 
-context.fillStyle = "white"
+context.fillStyle = "red"
 context.fillRect(0, 0, canvas.width, canvas.height)

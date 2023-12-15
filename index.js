@@ -7,6 +7,25 @@ canvas.height = 576
 
 const gravity = 0.5 // global
 
+class Sprite {
+    constructor({position, imageSrc}) {
+        this.position = position
+        this.image = new Image()
+        this.image.src = imageSrc
+    }
+
+    draw() {
+        if (!this.image) {
+            return
+        }
+        context.drawImage(this.image, this.position.x, this.position.y)
+    }
+
+    update() {
+        this.draw()
+    }
+}
+
 class Player {
     constructor(position) {
         this.position = position
@@ -40,7 +59,7 @@ class Player {
 // player object
 const player = new Player({x:0, y:0})
 
-// keys
+// keys -- outside of Player
 const keys = {
     d: {
         pressed: false
@@ -50,6 +69,15 @@ const keys = {
     }
 }
 
+// background
+const background = new Sprite({
+    position: {
+        x: 0,
+        y: 0
+    },
+    imageSrc: 'background.png',
+})
+
 // functions
 function animate() { // animation loop
     window.requestAnimationFrame(animate)
@@ -57,6 +85,9 @@ function animate() { // animation loop
     // bg
     context.fillStyle = "white"
     context.fillRect(0, 0, canvas.width, canvas.height)
+
+    // bg sprite
+    background.update()
 
     // player
     player.update()

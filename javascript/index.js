@@ -11,56 +11,26 @@ const scaledCanvas = {
     height: canvas.height / 4
 }
 
+// convert to 2D array lol
+const floorCollisions2D = [] // 27 rows, 36 cols
+for (let i = 0; i < floorCollisions.length; i+=36) { // 36 cols per row
+    floorCollisions2D.push(floorCollisions.slice(i, (i+36))) // add row
+}
+
+// floor collisions
+floorCollisions2D.forEach((row) => {
+    row.forEach((symbol) => {
+        if (symbol === 202) {
+            // pass - we want to draw out every collision block
+        }
+    })
+})
+
 const gravity = 0.5 // global
 
-class Sprite {
-    constructor({position, imageSrc}) {
-        this.position = position
-        this.image = new Image()
-        this.image.src = imageSrc
-    }
 
-    draw() {
-        if (!this.image) {
-            return
-        }
-        context.drawImage(this.image, this.position.x, this.position.y)
-    }
 
-    update() {
-        this.draw()
-    }
-}
 
-class Player {
-    constructor(position) {
-        this.position = position
-        this.velocity = {
-            x: 0,
-            y: 1
-        }
-        this.height = 100
-    }
-
-    draw() {
-        context.fillStyle = "red"
-        context.fillRect(this.position.x, this.position.y, 100, this.height)
-    }
-
-    update() {
-        this.draw()
-
-        this.position.x += this.velocity.x
-        this.position.y += this.velocity.y
-
-        if (this.position.y + this.height + this.velocity.y < canvas.height) { // fall keeps accelerating
-            this.velocity.y += gravity
-        }
-        else {
-            this.velocity.y = 0 // stops when bottom reached
-        }
-    }
-}
 
 // player object
 const player = new Player({x:0, y:0})

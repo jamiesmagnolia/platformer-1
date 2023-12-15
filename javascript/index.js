@@ -18,19 +18,21 @@ for (let i = 0; i < floorCollisions.length; i+=36) { // 36 cols per row
 }
 
 // floor collisions
-floorCollisions2D.forEach((row) => {
-    row.forEach((symbol) => {
+collisionBlocks = [] // stores all collision blocks
+floorCollisions2D.forEach((row, y) => { // y: row index
+    row.forEach((symbol, x) => { // x: col index
         if (symbol === 202) {
-            // pass - we want to draw out every collision block
+            collisionBlocks.push(new CollisionBlock({
+                position: {
+                    x: x * 16,
+                    y: y * 16
+                }
+            }))
         }
-    })
+        })
 })
 
 const gravity = 0.5 // global
-
-
-
-
 
 // player object
 const player = new Player({x:0, y:0})

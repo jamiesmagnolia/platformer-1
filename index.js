@@ -5,6 +5,12 @@ const context = canvas.getContext("2d") // what API you want
 canvas.width = 1024
 canvas.height = 576
 
+// scaled down
+const scaledCanvas = {
+    width: canvas.width / 4,
+    height: canvas.height / 4
+}
+
 const gravity = 0.5 // global
 
 class Sprite {
@@ -69,13 +75,13 @@ const keys = {
     }
 }
 
-// background
+// background sprite
 const background = new Sprite({
     position: {
         x: 0,
         y: 0
     },
-    imageSrc: 'background.png',
+    imageSrc: './images/background.png',
 })
 
 // functions
@@ -86,18 +92,25 @@ function animate() { // animation loop
     context.fillStyle = "white"
     context.fillRect(0, 0, canvas.width, canvas.height)
 
+    // scaling once
+    context.save()
+    context.scale(4, 4)
+    context.translate(0, -background.image.height + scaledCanvas.height)
+
     // bg sprite
     background.update()
+    context.restore() // scales only once
 
     // player
     player.update()
 
     player.velocity.x = 0
-    if (keys.d.pressed) {
-        player.velocity.x = 1
+
+    if (keys.d.pressed) { // player horizontal movement
+        player.velocity.x = 5
     }
     else if (keys.a.pressed) {
-        player.velocity.x = -1
+        player.velocity.x = -5
     }
 }
 
